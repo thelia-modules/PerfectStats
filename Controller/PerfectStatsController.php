@@ -3,12 +3,13 @@
 namespace PerfectStats\Controller;
 
 use PerfectStats\Service\PerfectStatsService;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 use Thelia\Controller\Admin\BaseAdminController;
 
 class PerfectStatsController extends BaseAdminController
 {
-    protected $perfectStatsService;
-
     private $monthKeys = [
         1 => 'perfectstats.month.january',   2 => 'perfectstats.month.february',
         3 => 'perfectstats.month.march',      4 => 'perfectstats.month.april',
@@ -18,10 +19,8 @@ class PerfectStatsController extends BaseAdminController
         11 => 'perfectstats.month.november', 12 => 'perfectstats.month.december'
     ];
 
-    public function __construct(PerfectStatsService $perfectStatsService)
-    {
-        $this->perfectStatsService = $perfectStatsService;
-    }
+    public function __construct(protected PerfectStatsService $perfectStatsService, protected LoggerInterface $logger)
+    {}
 
     private function getMonthName($month): string
     {
@@ -113,13 +112,14 @@ class PerfectStatsController extends BaseAdminController
         return [$cur, $prev, $year, $prevYear];
     }
 
-    private function errorResponse(\Exception $e, string $action): \Symfony\Component\HttpFoundation\Response
+    private function errorResponse(\Exception $e, string $action): Response
     {
-        error_log('PerfectStats ' . $action . ' Error: ' . $e->getMessage() . ' - ' . $e->getTraceAsString());
-        return $this->jsonResponse(json_encode(['error' => true, 'message' => $e->getMessage(), 'code' => $e->getCode()]), 500);
+        $this->logger->error('PerfectStats ' . $action . ' error: ' . $e->getMessage(), ['exception' => $e]);
+        return $this->jsonResponse(json_encode(['error' => true, 'message' => 'Une erreur interne est survenue.']), 500);
     }
 
-    public function dashboardAction()
+    #[Route("/admin/module/perfectstats", name: "perfectstats.dashboard", methods: ["GET"])]
+    public function dashboardAction(): Response
     {
         $now          = new \DateTime();
         $currentYear  = (int)$now->format('Y');
@@ -137,7 +137,8 @@ class PerfectStatsController extends BaseAdminController
         ]);
     }
 
-    public function getSummaryAction()
+    #[Route("/admin/module/perfectstats/summary", name: "perfectstats.summary", methods: ["GET"])]
+    public function getSummaryAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -147,7 +148,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getSummary'); }
     }
 
-    public function getOrderStatsAction()
+    #[Route("/admin/module/perfectstats/orders", name: "perfectstats.orders", methods: ["GET"])]
+    public function getOrderStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -172,7 +174,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getOrderStats'); }
     }
 
-    public function getRevenueStatsAction()
+    #[Route("/admin/module/perfectstats/revenue", name: "perfectstats.revenue", methods: ["GET"])]
+    public function getRevenueStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -197,7 +200,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getRevenueStats'); }
     }
 
-    public function getPaymentStatsAction()
+    #[Route("/admin/module/perfectstats/payments", name: "perfectstats.payments", methods: ["GET"])]
+    public function getPaymentStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -207,7 +211,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getPaymentStats'); }
     }
 
-    public function getShippingStatsAction()
+    #[Route("/admin/module/perfectstats/shipping", name: "perfectstats.shipping", methods: ["GET"])]
+    public function getShippingStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -217,7 +222,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getShippingStats'); }
     }
 
-    public function getProductStatsAction()
+    #[Route("/admin/module/perfectstats/products", name: "perfectstats.products", methods: ["GET"])]
+    public function getProductStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -227,7 +233,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getProductStats'); }
     }
 
-    public function getCustomerStatsAction()
+    #[Route("/admin/module/perfectstats/customers", name: "perfectstats.customers", methods: ["GET"])]
+    public function getCustomerStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -237,7 +244,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getCustomerStats'); }
     }
 
-    public function getGeographyStatsAction()
+    #[Route("/admin/module/perfectstats/geography", name: "perfectstats.geography", methods: ["GET"])]
+    public function getGeographyStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -247,7 +255,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getGeographyStats'); }
     }
 
-    public function getBrandStatsAction()
+    #[Route("/admin/module/perfectstats/brands", name: "perfectstats.brands", methods: ["GET"])]
+    public function getBrandStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();
@@ -257,7 +266,8 @@ class PerfectStatsController extends BaseAdminController
         } catch (\Exception $e) { return $this->errorResponse($e, 'getBrandStats'); }
     }
 
-    public function getCouponStatsAction()
+    #[Route("/admin/module/perfectstats/coupons", name: "perfectstats.coupons", methods: ["GET"])]
+    public function getCouponStatsAction(): Response
     {
         try {
             [$cur, $prev, $y, $py] = $this->getDateRanges();

@@ -3,38 +3,4 @@
 <routes xmlns="http://symfony.com/schema/routing"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
-    <route id="perfectstats.dashboard" path="/admin/module/perfectstats" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::dashboardAction</default>
-    </route>
-    <route id="perfectstats.summary" path="/admin/module/perfectstats/summary" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getSummaryAction</default>
-    </route>
-    <route id="perfectstats.orders" path="/admin/module/perfectstats/orders" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getOrderStatsAction</default>
-    </route>
-    <route id="perfectstats.revenue" path="/admin/module/perfectstats/revenue" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getRevenueStatsAction</default>
-    </route>
-    <route id="perfectstats.payments" path="/admin/module/perfectstats/payments" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getPaymentStatsAction</default>
-    </route>
-    <route id="perfectstats.shipping" path="/admin/module/perfectstats/shipping" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getShippingStatsAction</default>
-    </route>
-    <route id="perfectstats.products" path="/admin/module/perfectstats/products" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getProductStatsAction</default>
-    </route>
-    <route id="perfectstats.customers" path="/admin/module/perfectstats/customers" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getCustomerStatsAction</default>
-    </route>
-    <route id="perfectstats.geography" path="/admin/module/perfectstats/geography" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getGeographyStatsAction</default>
-    </route>
-    <route id="perfectstats.brands" path="/admin/module/perfectstats/brands" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getBrandStatsAction</default>
-    </route>
-    <route id="perfectstats.coupons" path="/admin/module/perfectstats/coupons" methods="get">
-        <default key="_controller">PerfectStats\Controller\PerfectStatsController::getCouponStatsAction</default>
-    </route>
-
 </routes>

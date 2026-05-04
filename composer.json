@@ -1,5 +1,5 @@
 {
-    "name": "perfectstats/perfectstats",
+    "name": "thelia/perfectstats-module",
     "description": "PerfectStats - Advanced Statistics Module for Thelia",
     "type": "thelia-module",
     "license": "LGPL-3.0+",
