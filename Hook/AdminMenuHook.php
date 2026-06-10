@@ -11,7 +11,7 @@ class AdminMenuHook extends BaseHook
     public function onMainInTopMenuItems(HookRenderEvent $event): void
     {
         $event->add(
-            $this->render('PerfectStats/hook/main.in.top.menu.items.html', [])
+            $this->render('PerfectStats/hook/main.in.top.menu.items.html.twig', [])
         );
     }
 

@@ -1,0 +1,8 @@
+<li class="nav-item">
+    <a class="nav-link {{ admin_current_location starts with 'perfectstats' ? 'active' : '' }}"
+       href="{{ path('perfectstats.dashboard') }}"
+       title="{{ 'perfectstats.title'|trans({}, 'perfectstats.bo.default') }}">
+        <i class="bi bi-bar-chart-line me-2" aria-hidden="true"></i>
+        <span class="item-text">{{ 'perfectstats.title'|trans({}, 'perfectstats.bo.default') }}</span>
+    </a>
+</li>
