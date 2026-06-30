@@ -31,9 +31,9 @@ class PerfectStatsController extends BaseAdminController
     protected function getCurrentLocale(): string
     {
         try {
-            $session = $this->getRequest()->getSession();
-            if ($session) {
-                $lang = $session->getLang();
+            $request = $this->getRequest();
+            if ($request !== null && $request->hasSession()) {
+                $lang = $request->getSession()->getLang();
                 if ($lang) return $lang->getLocale();
             }
         } catch (\Exception $e) {}
